@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Screen</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #121212; color: #fff; margin: 0; padding: 20px; }
+        .container { max-width: 800px; margin: 0 auto; }
+        h1 { color: #00ff00; text-align: center; }
+        .screen-container { margin: 20px 0; text-align: center; }
+        img { max-width: 100%; border: 2px solid #00ff00; }
+        .btn { background: #00ff00; color: #000; border: none; padding: 5px 10px; cursor: pointer; margin: 5px; }
+        .btn:hover { background: #00aa00; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>View Screen</h1>
+        <div class="screen-container">
+            <img id="screenImage" src="" alt="Screen not available">
+            <div>
+                <button class="btn" onclick="refreshScreen()">Refresh</button>
+                <button class="btn" onclick="window.location.href='/'">Back</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const uuid = urlParams.get('uuid');
+
+        async function fetchScreen() {
+            const response = await fetch('/getScreen', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ uuid })
+            });
+            const result = await response.json();
+            if (result.ok) {
+                document.getElementById('screenImage').src = result.image;
+            } else {
+                alert('Screen not available');
+            }
+        }
+
+        function refreshScreen() {
+            fetchScreen();
+        }
+
+        fetchScreen();
+    </script>
+</body>
+</html>
