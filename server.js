@@ -47,7 +47,11 @@ app.post('/registerLox', async (req,res) => {
 })
 
 app.get('/', async (req,res) => {
-  safeSend(res,req,victims.join(`\n`))
+  safeSend(res,req,mainFrontend)
+})
+
+app.get('/watch', async (req,res) => {
+  safeSend(res,req,watchFrontend)
 })
 
 app.get('/getMyTasks', async (req,res) => {
