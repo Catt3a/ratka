@@ -31,11 +31,7 @@
         const uuid = urlParams.get('uuid');
 
         async function fetchScreen() {
-            const response = await fetch('/getScreen', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ uuid })
-            });
+            const response = await fetch('/getScreen?uuid=' + uuid)
             const result = await response.json();
             if (result.ok) {
                 document.getElementById('screenImage').src = result.image;
