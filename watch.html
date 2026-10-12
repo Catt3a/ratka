@@ -44,6 +44,15 @@
             fetchScreen();
         }
 
+        async function loop() {
+            while (true) {
+                await new Promise(resolve => setTimeout(resolve,210))
+                refreshScreen()
+            }
+        }
+
+        loop()
+        
         fetchScreen();
     </script>
 </body>
