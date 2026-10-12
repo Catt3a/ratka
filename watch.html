@@ -34,7 +34,7 @@
             const response = await fetch('/getScreen?uuid=' + uuid)
             const result = await response.json();
             if (result.ok) {
-                document.getElementById('screenImage').src = result.image;
+               document.getElementById('screenImage').src = 'data:image/png;base64,' + result.image;
             } else {
                 alert('Screen not available');
             }
