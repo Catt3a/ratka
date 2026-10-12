@@ -13,7 +13,7 @@ let victims = []
 
 async function getPublicIpAddress() {
     try {
-        const response = await fetch('https://ipify.org')
+        const response = await fetch('https://api.ipify.org')
         const data = await response.json()
         console.log('Your Public IP Address:', data.ip)
         return data.ip
